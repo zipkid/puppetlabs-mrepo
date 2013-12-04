@@ -40,6 +40,21 @@ define mrepo::repo::rhn (
   $http_proxy   = $mrepo::params::http_proxy
   $https_proxy  = $mrepo::params::https_proxy
 
+  if ( $http_proxy ) {
+    $http_proxy_array = ["http_proxy=${http_proxy}"]
+  }
+  else {
+    $http_proxy_array = []
+  }
+  if ( $https_proxy ) {
+    $https_proxy_array = ["https_proxy=${https_proxy}"]
+  }
+  else {
+    $https_proxy_array = []
+  }
+
+  $environment  = concat($http_proxy_array,$https_proxy_array)
+
   case $ensure {
     present: {
       exec { "Generate systemid $name - $arch":
@@ -54,7 +69,7 @@ define mrepo::repo::rhn (
         ],
         before      => Exec["Generate mrepo repo ${name}"],
         logoutput   => on_failure,
-        environment => ["http_proxy=${http_proxy}","https_proxy=${https_proxy}"],
+        environment => $environment,
       }
     }
   }
