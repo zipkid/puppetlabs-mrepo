@@ -119,6 +119,7 @@ define mrepo::repo (
   $mrepo_command = '/usr/bin/mrepo',
   $mrepo_options = '-qgu',
   $mrepo_logging = '',
+  $createrepo_options = '',
 ) {
   include mrepo
   include mrepo::params

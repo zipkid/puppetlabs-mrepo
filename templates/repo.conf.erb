@@ -8,6 +8,9 @@ metadata = <%= if @metadata.is_a? Array; then @metadata.join(' '); else @metadat
 <% unless @iso.empty? -%>
 iso = <%= @iso %>
 <% end -%>
+<% unless @createrepo_options.empty? -%>
+createrepo_options = <%= @createrepo_options %>
+<% end -%>
 <% @urls.keys.sort.each do |name| -%>
 <%= name %> = <%= @urls[name] %>
 <% end -%>
